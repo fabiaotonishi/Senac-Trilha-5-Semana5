@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AppConsole
+namespace AppConsole.Modelos
 {
     public class Endereco
     {

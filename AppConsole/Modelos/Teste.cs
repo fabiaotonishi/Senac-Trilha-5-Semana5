@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AppConsole
+namespace AppConsole.Modelos
 {
     public class Teste
     {
@@ -27,7 +27,7 @@ namespace AppConsole
             cliente.Email = "fulano.tal@teste.com.br";
             cliente.Profissao = "Docente";
             cliente.Telefone = "(00) 00000 0000";
-            cliente.Endereco = endereco;          
+            cliente.Endereco = endereco;
         }
 
         public void Executar()

@@ -1,5 +1,7 @@
 ﻿// See https://aka.ms/new-console-template for more information
-using AppConsole;
+using AppConsole.Modelos;
+using System;
+using System.Text.Json;
 
 /*---------------------------------------------- */
 Console.Clear();
@@ -14,14 +16,14 @@ Console.ReadKey();
 
 /*---------------------------------------------- */
 List<Produto> listaProdutos = new List<Produto>();
-ExibeMenu();
+ExibeMenuAsync();
 
-void ExibeMenu()
+void ExibeMenuAsync()
 {
 	var numero=0;
     Inicio:
     Console.Clear();
-    Console.WriteLine("Informe o numero: (1) Criar Produto ou (2) Listar Produtos");
+    Console.WriteLine("Informe o numero: (1) Criar Produto ou (2) Listar Produtos ou (3) Buscar Produto Externo");
 	if (!Int32.TryParse(Console.ReadLine(), out numero))
 	{
         Console.WriteLine("Informe um numero!");
@@ -36,7 +38,10 @@ void ExibeMenu()
 		case 2:
 			ListarProduto();
 			break;
-		default:
+        case 3:
+            BuscarProdutoAsync().Wait();
+            break;
+        default:
 			Console.WriteLine("Escolha uma opção válida!");
 			goto Inicio;
 			break;
@@ -73,7 +78,7 @@ void CriarProduto()
     Console.WriteLine("Produto criado com sucesso!");
     Console.WriteLine("Pressione uma tecla para voltar ao menu. \n");
 	Console.ReadKey();
-	ExibeMenu();
+	ExibeMenuAsync();
 }
 
 void ListarProduto()
@@ -86,7 +91,28 @@ void ListarProduto()
     }
     Console.WriteLine("Pressione uma tecla para voltar ao menu. \n");
     Console.ReadKey();
-    ExibeMenu();
+    ExibeMenuAsync();
 }
 
+async Task BuscarProdutoAsync()
+{
+    using (HttpClient clientHttp = new HttpClient())
+    {
+        try
+        {
+            string resposta = await clientHttp.GetStringAsync("https://fakestoreapi.com/products");
+            //Console.WriteLine(resposta);
+            listaProdutos = JsonSerializer.Deserialize<List<Produto>>(resposta)!;
+            ListarProduto();
+            Console.WriteLine("Pressione uma tecla para voltar ao menu. \n");
+            Console.ReadKey();
+            ExibeMenuAsync();
 
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Ocorreu um problema: {ex.Message}");
+        }
+    }
+
+}
