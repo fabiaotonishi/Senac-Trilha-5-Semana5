@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Comex.Modelos.FTOnishi" Version="1.0.0" />
+    <ProjectReference Include="..\Comex.Modelos\Comex.Modelos.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,28 +1,15 @@
 ﻿// See https://aka.ms/new-console-template for more information
-//Refatoracao (Semana 8)
-//dotnet add package Comex.Modelos.FTOnishi --version 1.0.0
-
-using AppConsole;
 using Comex.Modelos;
 using System;
 using System.Text.Json;
+using static System.Net.Mime.MediaTypeNames;
+
 
 /*---------------------------------------------- */
-Console.Clear();
-Console.WriteLine("Hello, World!");
-Console.ReadKey();
-
-/*---------------------------------------------- */
-Console.Clear();
-Teste teste = new Teste();
-teste.Executar();
-Console.ReadKey();
-
-/*---------------------------------------------- */
-List<Produto> listaProdutos = new List<Produto>() 
-{ 
+List<Produto> listaProdutos = new List<Produto>()
+{
     new Produto()
-    { 
+    {
         Nome = "Teste",
         Descricao = "Produto de teste",
         PrecoUnitario = 1.00,
@@ -36,7 +23,7 @@ ExibeMenuAsync();
 
 void ExibeMenuAsync()
 {
-	var numero=0;
+    var numero = 0;
     Inicio:
     Console.Clear();
     Console.WriteLine("Informe o numero: " +
@@ -45,20 +32,20 @@ void ExibeMenuAsync()
         "(3) Buscar Produto Externo" +
         "(4) Criar Pedido" +
         "(5) Listar Pedidos");
-	if (!Int32.TryParse(Console.ReadLine(), out numero))
-	{
+    if (!Int32.TryParse(Console.ReadLine(), out numero))
+    {
         Console.WriteLine("Informe um numero!");
         goto Inicio;
     }
-	
-	switch (numero)
-	{
-		case 1:
-			CriarProduto();
-			break;
-		case 2:
-			ListarProduto();
-			break;
+
+    switch (numero)
+    {
+        case 1:
+            CriarProduto();
+            break;
+        case 2:
+            ListarProduto();
+            break;
         case 3:
             BuscarProdutoAsync().Wait();
             break;
@@ -69,52 +56,52 @@ void ExibeMenuAsync()
             ListarPedido();
             break;
         default:
-			Console.WriteLine("Escolha uma opção válida!");
-			goto Inicio;
-			break;
-	}
+            Console.WriteLine("Escolha uma opção válida!");
+            goto Inicio;
+            break;
+    }
 }
 
 void CriarProduto()
 {
-	string nome;
-	string descricao;
-	double precoUnitario;
-	int quantidade;
-	Console.Clear();
+    string nome;
+    string descricao;
+    double precoUnitario;
+    int quantidade;
+    Console.Clear();
     Console.WriteLine("Para criar um produto informe: \n");
     Console.WriteLine("Nome");
-	nome = Console.ReadLine();
+    nome = Console.ReadLine();
     Console.WriteLine("Descrição");
     descricao = Console.ReadLine();
     Console.WriteLine("Preço Unitário");
-	if (!double.TryParse(Console.ReadLine(), out precoUnitario))
-	{
-		precoUnitario = 0;
-	}
+    if (!double.TryParse(Console.ReadLine(), out precoUnitario))
+    {
+        precoUnitario = 0;
+    }
     Console.WriteLine("Quantidade");
     if (!int.TryParse(Console.ReadLine(), out quantidade))
     {
         quantidade = 0;
-    }    
+    }
     Produto produto = new Produto(nome);
-	produto.Descricao = descricao;
-	produto.PrecoUnitario = precoUnitario;
-	produto.Quantidade = quantidade;
-	listaProdutos.Add(produto);
+    produto.Descricao = descricao;
+    produto.PrecoUnitario = precoUnitario;
+    produto.Quantidade = quantidade;
+    listaProdutos.Add(produto);
     Console.WriteLine("Produto criado com sucesso!");
     Console.WriteLine("Pressione uma tecla para voltar ao menu. \n");
-	Console.ReadKey();
-	ExibeMenuAsync();
+    Console.ReadKey();
+    ExibeMenuAsync();
 }
 
 void ListarProduto()
 {
-	Console.Clear();
+    Console.Clear();
     Console.WriteLine("Lista de Produtos:");
-	foreach (var produto in listaProdutos)
-	{
-		Console.WriteLine($"\n Nome: {produto.Nome} Descrição: {produto.Descricao} Preço Unitário {produto.PrecoUnitario} Quantidade {produto.Quantidade}");        
+    foreach (var produto in listaProdutos)
+    {
+        Console.WriteLine($"\n Nome: {produto.Nome} Descrição: {produto.Descricao} Preço Unitário {produto.PrecoUnitario} Quantidade {produto.Quantidade}");
     }
     Console.WriteLine("Pressione uma tecla para voltar ao menu. \n");
     Console.ReadKey();
@@ -145,7 +132,7 @@ async Task BuscarProdutoAsync()
 }
 void CriarPedido()
 {
-    
+
     Console.Clear();
     Console.WriteLine("Para criar um pedido informe: \n");
     Console.WriteLine("Nome");
@@ -155,7 +142,7 @@ void CriarPedido()
         Nome = nome
     };
     var pedido = new Pedido(cliente);
-    
+
     Console.WriteLine("Produto disponíveis");
     for (int i = 0; i < listaProdutos.Count; i++)
     {
@@ -179,7 +166,7 @@ void CriarPedido()
         Console.WriteLine("Quantidade inválida");
         goto Quantidade;
     }
-    
+
     var itemPedido = new ItemDePedido(produto, quantidade, produto.PrecoUnitario);
     pedido.AdicionarItem(itemPedido);
     listaPedidos.Add(pedido);
@@ -202,3 +189,5 @@ void ListarPedido()
     Console.ReadKey();
     ExibeMenuAsync();
 }
+
+

@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
+    <Title>Comex.Modelos</Title>
+    <PackageId>$(AssemblyName).FTOnishi</PackageId>
+    <Description>Biblioteca de classe do curos Senac Trilha 5 da Semana 8</Description>
+  </PropertyGroup>
+
+</Project>
